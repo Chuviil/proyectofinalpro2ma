@@ -24,7 +24,7 @@ const cards = {
   informacionLista: {
     SVG: require("../assets/certificatesvgbtn.svg").default,
     title: "Informacion Lista",
-    description: "Visualiza tu certificado de votacion",
+    description: "Visualiza la informacion de tu lista",
     color: "#4653cb",
   },
 };
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 const CandidatoScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
-  const { usuario } = route.params;
+  const { usuario, listas, eleccion } = route.params;
   return (
     <View
       style={[
@@ -77,7 +77,7 @@ const CandidatoScreen = ({ navigation, route }) => {
           <BotonTarjeta
             card={cards.inscribirse}
             onPress={() => {
-              navigation.navigate("InscribirseScreen");
+              navigation.navigate("InscribirseScreen", { listas, usuario });
             }}
           />
           <BotonTarjeta card={cards.resultados} />

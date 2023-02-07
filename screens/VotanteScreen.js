@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 const VotanteScreen = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
-  const { usuario } = route.params;
+  const { usuario, listas, eleccion } = route.params;
   return (
     <View
       style={[

@@ -12,6 +12,8 @@ import axios from "axios";
 import Candidato from "../classes/Candidato.class";
 import AnimatedLottieView from "lottie-react-native";
 import Votante from "../classes/Votante.class";
+import Eleccion from "../classes/Eleccion.class";
+import Lista from "../classes/Lista.class";
 
 const styles = StyleSheet.create({
   container: {
@@ -100,15 +102,55 @@ const InicioSesionScreen = ({ navigation }) => {
     console.log(
       `Iniciando sesión: Cedula: ${cedula.valor} Contrasenia:${contrasenia.valor}`
     );
-    axios
-      .get(
+    const requests = [
+      axios.get(
         `https://proyectofinalprogii.onrender.com/api/personas/${cedula.valor}`,
         {
           params: { contrasenia: contrasenia.valor },
         }
-      )
-      .then((res) => {
-        const { __t } = res.data;
+      ),
+      axios.get(`https://proyectofinalprogii.onrender.com/api/elecciones/`),
+      axios.get(`https://proyectofinalprogii.onrender.com/api/listas/`),
+    ];
+
+    Promise.all(requests)
+      .then((responses) => {
+        const datas = responses.map((res) => res.data);
+
+        const { __t } = datas[0];
+        const {
+          fechaInicio,
+          fechaFin,
+          votosElectronicos,
+          alcaldeGanador,
+          prefectoGanador,
+          listaConsejalesGanadora,
+        } = datas[1];
+        const eleccion = new Eleccion();
+        eleccion.establecerFechaInicio(fechaInicio);
+        eleccion.establecerFechaFin(fechaFin);
+        votosElectronicos.forEach((voto) =>
+          eleccion.agregarVotoElectronico(voto)
+        );
+        console.log(`Eleccion actual: ${JSON.stringify(eleccion)}`);
+        const listas = [];
+        datas[2].forEach((lista) => {
+          const {
+            nombrePartido,
+            numero,
+            candidatoAlcalde,
+            candidatoPrefecto,
+            candidatosConsejal,
+          } = lista;
+          const listaObj = new Lista(nombrePartido, numero);
+          listaObj.establecerCandidatoPrefecto(candidatoPrefecto);
+          listaObj.establecerCandidatoAlcalde(candidatoAlcalde);
+          candidatosConsejal.forEach((candidato) => {
+            listaObj.agregarConcejal(candidato);
+          });
+          listas.push(listaObj);
+        });
+        console.log(`Listas Registradas: ${JSON.stringify(listas)}`);
         let usuario;
         if (__t === "Candidato") {
           console.log("El usuario es candidato");
@@ -122,7 +164,7 @@ const InicioSesionScreen = ({ navigation }) => {
             genero,
             lista,
             parroquia,
-          } = res.data;
+          } = datas[0];
           usuario = new Candidato(
             nombres,
             apellidos,
@@ -135,7 +177,7 @@ const InicioSesionScreen = ({ navigation }) => {
           usuario.establecerLista(lista);
           usuario.establecerDignidad(dignidad);
           console.log(`Datos de usuario: ${JSON.stringify(usuario)}`);
-          navigation.replace("CandidatoScreen", { usuario });
+          navigation.replace("CandidatoScreen", { usuario, listas, eleccion });
         } else {
           console.log("El usuario es votante");
           const {
@@ -147,7 +189,7 @@ const InicioSesionScreen = ({ navigation }) => {
             genero,
             parroquia,
             voto,
-          } = res.data;
+          } = datas[0];
           usuario = new Votante(
             nombres,
             apellidos,
@@ -159,8 +201,10 @@ const InicioSesionScreen = ({ navigation }) => {
           );
           usuario.establecerEstadoVoto(voto);
           console.log(`Datos de usuario: ${JSON.stringify(usuario)}`);
-          navigation.replace("VotanteScreen", { usuario });
+          navigation.replace("VotanteScreen", { usuario, listas, eleccion });
         }
+
+        setCargando(false);
       })
       .catch((e) => {
         Alert.alert("Error", "Cedula o contraseña incorrecta");

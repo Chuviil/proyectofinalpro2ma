@@ -5,9 +5,8 @@ export default class Eleccion {
     this.alcaldeGanador = null;
     this.prefectoGanador = null;
     this.listaConsejalesGanadora = null;
+    this.votosElectronicos = [];
   }
-
-  static votosElectronicos = [];
 
   establecerFechaInicio(fechaInicio) {
     this.fechaInicio = fechaInicio;
@@ -17,7 +16,7 @@ export default class Eleccion {
     this.fechaFin = fechaFin;
   }
 
-  static agregarVotoElectronico(votoElectronico) {
+  agregarVotoElectronico(votoElectronico) {
     this.votosElectronicos.push(votoElectronico);
   }
 
@@ -51,9 +50,8 @@ export default class Eleccion {
 
   calcularResultados() {
     this.votosElectronicos.forEach((votoElectronico) => {
-      if (votoElectronico.esValido()){
-
+      if (votoElectronico.esValido()) {
       }
-    })
+    });
   }
 }

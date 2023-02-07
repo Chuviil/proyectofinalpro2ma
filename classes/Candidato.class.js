@@ -38,4 +38,8 @@ export default class Candidato extends Persona {
   obtenerLista() {
     return this.lista;
   }
+
+  puedeInscribirse() {
+    return this.lista === null;
+  }
 }

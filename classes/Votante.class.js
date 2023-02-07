@@ -41,6 +41,5 @@ export default class Votante extends Persona {
       new Date(),
       parroquia
     );
-    Eleccion.agregarVotoElectronico(votoActual);
   }
 }
