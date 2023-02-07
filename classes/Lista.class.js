@@ -30,7 +30,7 @@ export default class Lista {
     return (
       this.candidatoAlcalde !== null &&
       this.candidatoPrefecto !== null &&
-      this.candidatosConcejal >= 6
+      this.candidatosConcejal.length === 6
     );
   }
 

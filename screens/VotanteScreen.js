@@ -74,7 +74,12 @@ const VotanteScreen = ({ route, navigation }) => {
         </Text>
         <Text>{usuario.obtenerNombreCompleto()}</Text>
         <View style={styles.btnContainer}>
-          <BotonTarjeta card={cards.vote} />
+          <BotonTarjeta
+            card={cards.vote}
+            onPress={() => {
+              navigation.navigate("VotarScreen", { listas });
+            }}
+          />
           <BotonTarjeta card={cards.resultados} />
           <BotonTarjeta card={cards.certificado} />
         </View>

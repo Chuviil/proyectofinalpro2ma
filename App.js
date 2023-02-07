@@ -7,6 +7,7 @@ import CandidatoScreen from "./screens/CandidatoScreen";
 import VotanteScreen from "./screens/VotanteScreen";
 import InscribirseScreen from "./screens/InscribirseScreen";
 import InformacionListaScreen from "./screens/InformacionListaScreen";
+import VotarScreen from "./screens/VotarScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,11 @@ export default function App() {
           name={"VotanteScreen"}
           component={VotanteScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={"VotarScreen"}
+          component={VotarScreen}
+          options={{ title: "Votar" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
