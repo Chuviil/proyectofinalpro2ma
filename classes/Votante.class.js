@@ -1,6 +1,5 @@
 import Persona from "./Persona.class";
 import VotoElectronico from "./VotoElectronico.class";
-import Eleccion from "./Eleccion.class";
 
 export default class Votante extends Persona {
   constructor(
@@ -32,14 +31,14 @@ export default class Votante extends Persona {
     this.voto = voto;
   }
 
-  votar(candidatoAlcalde, candidatoPrefecto, listaConsejales, parroquia) {
+  votar(candidatoAlcalde, candidatoPrefecto, listaConsejales) {
     this.voto = true;
-    const votoActual = new VotoElectronico(
+    return new VotoElectronico(
       candidatoAlcalde,
       candidatoPrefecto,
       listaConsejales,
       new Date(),
-      parroquia
+      this.obtenerParroquia()
     );
   }
 }

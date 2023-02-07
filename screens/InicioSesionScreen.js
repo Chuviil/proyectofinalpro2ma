@@ -103,14 +103,11 @@ const InicioSesionScreen = ({ navigation }) => {
       `Iniciando sesión: Cedula: ${cedula.valor} Contrasenia:${contrasenia.valor}`
     );
     const requests = [
-      axios.get(
-        `https://proyectofinalprogii.onrender.com/api/personas/${cedula.valor}`,
-        {
-          params: { contrasenia: contrasenia.valor },
-        }
-      ),
-      axios.get(`https://proyectofinalprogii.onrender.com/api/elecciones/`),
-      axios.get(`https://proyectofinalprogii.onrender.com/api/listas/`),
+      axios.get(`http://192.168.100.72:4000/api/personas/${cedula.valor}`, {
+        params: { contrasenia: contrasenia.valor },
+      }),
+      axios.get(`http://192.168.100.72:4000/api/elecciones/`),
+      axios.get(`http://192.168.100.72:4000/api/listas/`),
     ];
 
     Promise.all(requests)
@@ -164,6 +161,7 @@ const InicioSesionScreen = ({ navigation }) => {
             genero,
             lista,
             parroquia,
+            nombreParroquia,
           } = datas[0];
           usuario = new Candidato(
             nombres,
@@ -176,6 +174,7 @@ const InicioSesionScreen = ({ navigation }) => {
           );
           usuario.establecerLista(lista);
           usuario.establecerDignidad(dignidad);
+          usuario.nombreParroquia = nombreParroquia;
           console.log(`Datos de usuario: ${JSON.stringify(usuario)}`);
           navigation.replace("CandidatoScreen", { usuario, listas, eleccion });
         } else {
@@ -188,6 +187,7 @@ const InicioSesionScreen = ({ navigation }) => {
             fechaNacimiento,
             genero,
             parroquia,
+            nombreParroquia,
             voto,
           } = datas[0];
           usuario = new Votante(
@@ -200,6 +200,7 @@ const InicioSesionScreen = ({ navigation }) => {
             genero
           );
           usuario.establecerEstadoVoto(voto);
+          usuario.nombreParroquia = nombreParroquia;
           console.log(`Datos de usuario: ${JSON.stringify(usuario)}`);
           navigation.replace("VotanteScreen", { usuario, listas, eleccion });
         }

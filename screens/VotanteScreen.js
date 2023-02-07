@@ -77,11 +77,16 @@ const VotanteScreen = ({ route, navigation }) => {
           <BotonTarjeta
             card={cards.vote}
             onPress={() => {
-              navigation.navigate("VotarScreen", { listas });
+              navigation.navigate("VotarScreen", { listas, eleccion, usuario });
             }}
           />
           <BotonTarjeta card={cards.resultados} />
-          <BotonTarjeta card={cards.certificado} />
+          <BotonTarjeta
+            card={cards.certificado}
+            onPress={() => {
+              navigation.navigate("CertificadoScreen", { usuario });
+            }}
+          />
         </View>
         <TouchableOpacity
           style={styles.salirBtn}

@@ -165,7 +165,7 @@ const RegistroScreen = ({ navigation }) => {
       Dignidad: ${dignidad}`
     );
     axios
-      .post("https://proyectofinalprogii.onrender.com/api/personas", {
+      .post("http://192.168.100.72:4000/api/personas", {
         nombres: nombres.valor,
         apellidos: apellidos.valor,
         cedula: cedula.valor,

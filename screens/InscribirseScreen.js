@@ -28,7 +28,7 @@ const InscribirseScreen = ({ navigation, route }) => {
     }
     axios
       .patch(
-        `https://proyectofinalprogii.onrender.com/api/personas/candidato/lista/${usuario.obtenerCedula()}?numero=${lista.obtenerNumero()}`
+        `http://192.168.100.72:4000/api/personas/candidato/lista/${usuario.obtenerCedula()}?numero=${lista.obtenerNumero()}`
       )
       .then(() => {
         Alert.alert(
