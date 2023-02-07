@@ -81,7 +81,12 @@ const CandidatoScreen = ({ navigation, route }) => {
             }}
           />
           <BotonTarjeta card={cards.resultados} />
-          <BotonTarjeta card={cards.informacionLista} />
+          <BotonTarjeta
+            card={cards.informacionLista}
+            onPress={() => {
+              navigation.navigate("InformacionListaScreen", { usuario });
+            }}
+          />
         </View>
         <TouchableOpacity
           style={styles.salirBtn}

@@ -6,6 +6,7 @@ import RegistroScreen from "./screens/RegistroScreen";
 import CandidatoScreen from "./screens/CandidatoScreen";
 import VotanteScreen from "./screens/VotanteScreen";
 import InscribirseScreen from "./screens/InscribirseScreen";
+import InformacionListaScreen from "./screens/InformacionListaScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ export default function App() {
           name={"InscribirseScreen"}
           component={InscribirseScreen}
           options={{ title: "Inscribirse", animation: "slide_from_right" }}
+        />
+        <Stack.Screen
+          name={"InformacionListaScreen"}
+          component={InformacionListaScreen}
+          options={{ title: "Informacion Lista" }}
         />
         <Stack.Screen
           name={"VotanteScreen"}
